@@ -1,11 +1,17 @@
+import Layout from "components/layout/layout";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+
+import App from "./components/App";
+
+import { GlobalStyle } from "./GlogalStyle";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Layout>
+      <App />
+    </Layout>
+    <GlobalStyle />
   </React.StrictMode>
 );

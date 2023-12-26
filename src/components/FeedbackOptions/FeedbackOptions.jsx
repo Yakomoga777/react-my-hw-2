@@ -7,21 +7,20 @@ import {
 
 class FeedbackOptions extends Component {
   render() {
-    const { title, btn, onClick } = this.props;
+    const { title, options, onLeaveFeedback } = this.props;
 
     return (
       <>
         <TitleStyled>{title}</TitleStyled>
         <BtnContanerStyled>
-          {btn.map((i, index) => (
+          {options.map((i) => (
             <ButtonStyled
               key={i}
               type="button"
-              onClick={() => {
-                onClick(index);
-              }}
+              name={i}
+              onClick={onLeaveFeedback}
             >
-              {i}
+              {i.charAt(0).toUpperCase() + i.slice(1)}
             </ButtonStyled>
           ))}
         </BtnContanerStyled>

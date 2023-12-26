@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import Layout from "components/layout/layout";
 import FeedbackOptions from "./FeedbackOptions/FeedbackOptions";
+import Statistics from "./Statistics/Statistics";
 
 // import "./App.css";
 
@@ -11,31 +12,46 @@ class App extends Component {
     neutral: 0,
     bad: 0,
   };
-  makeIncrement = (index) => {
-    this.setState((prevState) => {
-      if (index === 0) {
-        return { good: prevState.good + 1 };
-      } else if (index === 1) {
-        return { neutral: prevState.neutral + 1 };
-      } else if (index === 2) {
-        return { bad: prevState.bad + 1 };
-      }
-    });
+
+  addFeedback = (evt) => {
+    console.log(evt.target.name);
+    this.setState((prevState) => ({
+      [evt.target.name]: prevState[evt.target.name] + 1,
+    }));
+
+    this.countTotal();
   };
 
-  handleBtn = (index) => {
-    this.makeIncrement(index);
-  };
+  countTotal() {
+    const total = this.state.good + this.state.neutral + this.state.bad;
+    return total;
+  }
+
+  countPositivFeedback() {
+    const positive =
+      ((this.state.good + this.state.neutral) / this.countTotal()) * 100;
+
+    return Math.round(positive);
+  }
 
   render() {
-    console.log(this.state);
+    const options = Object.keys(this.state);
 
     return (
       <Layout className="App-header">
         <FeedbackOptions
           title={"Please leave feedback"}
-          btn={["Good", "Neutral", "Bad"]}
-          onClick={this.handleBtn}
+          options={options}
+          onLeaveFeedback={this.addFeedback}
+        />
+        <Statistics
+          feedback={options}
+          valey={this.state}
+          total={this.countTotal()}
+          positive={this.countPositivFeedback()}
+          totalOption={"Total"}
+          percentagesOption={"Positive feedback"}
+          // addedOptions={["Total", "Positive feedback"]}
         />
       </Layout>
     );

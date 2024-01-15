@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import Layout from "components/layout/layout";
 import FeedbackOptions from "./FeedbackOptions/FeedbackOptions";
 import Statistics from "./Statistics/Statistics";
+import Notification from "./Notification/Notification";
 
 // import "./App.css";
 
@@ -44,15 +45,20 @@ class App extends Component {
           options={options}
           onLeaveFeedback={this.addFeedback}
         />
-        <Statistics
-          feedback={options}
-          valey={this.state}
-          total={this.countTotal()}
-          positive={this.countPositivFeedback()}
-          totalOption={"Total"}
-          percentagesOption={"Positive feedback"}
-          // addedOptions={["Total", "Positive feedback"]}
-        />
+
+        {this.countTotal() === 0 ? (
+          <Notification message="There is no feedback" />
+        ) : (
+          <Statistics
+            feedback={options}
+            valey={this.state}
+            total={this.countTotal()}
+            positive={this.countPositivFeedback()}
+            totalOption={"Total"}
+            percentagesOption={"Positive feedback"}
+            // addedOptions={["Total", "Positive feedback"]}
+          />
+        )}
       </Layout>
     );
   }
